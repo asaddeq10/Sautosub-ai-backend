@@ -1,0 +1,13 @@
+kind = "api"
+previewPath = "/autosub-ai"
+title = "AutoSub AI Backend"
+version = "1.0.0"
+id = "AutoSubAIBackend001"
+
+[[services]]
+localPort = 8000
+name = "AutoSub AI Backend"
+paths = ["/autosub-ai"]
+
+[services.development]
+run = "cd artifacts/autosub-backend && uvicorn app.main:app --host 0.0.0.0 --port 8000"
