@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: autosub-ai-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free              # Free tier — 512 MB RAM, no persistent disk, spins down after 15 min
+    region: oregon
+    envVars:
+      - key: WHISPER_MODEL_SIZE
+        value: tiny         # tiny model (~150 MB) — safe for 512 MB free-tier RAM
+      - key: WHISPER_DEVICE
+        value: cpu
+      - key: WHISPER_COMPUTE_TYPE
+        value: int8
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: MAX_FILE_SIZE_MB
+        value: "100"        # Keep small — files stored in ephemeral /tmp on free tier
+      - key: UPLOAD_DIR
+        value: /tmp/uploads
+      - key: OUTPUT_DIR
+        value: /tmp/outputs
+    healthCheckPath: /health
+    # NOTE: No persistent disk on free tier.
+    # Uploaded files and generated SRTs are stored in /tmp and lost on redeploy/restart.
+    # Users must download their SRT before the service restarts.

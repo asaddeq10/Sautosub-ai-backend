@@ -3,11 +3,11 @@ services:
     name: autosub-ai-backend
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: standard
+    plan: standard          # Standard ($7/mo) — required for persistent disk + 2 GB RAM
     region: oregon
     envVars:
       - key: WHISPER_MODEL_SIZE
-        value: small
+        value: small        # small model fits comfortably in 2 GB RAM (Standard plan)
       - key: WHISPER_DEVICE
         value: cpu
       - key: WHISPER_COMPUTE_TYPE
@@ -22,6 +22,6 @@ services:
         value: /data/outputs
     disk:
       name: autosub-data
-      mountPath: /data
+      mountPath: /data      # Persistent disk — keeps uploads/SRTs across deploys
       sizeGB: 10
     healthCheckPath: /health

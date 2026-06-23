@@ -11,14 +11,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN mkdir -p /data/uploads /data/outputs uploads outputs
+# Create local fallback dirs (used in dev and free-tier /tmp deployments).
+# On Standard plan, UPLOAD_DIR and OUTPUT_DIR env vars point to the mounted disk instead.
+RUN mkdir -p uploads outputs /tmp/uploads /tmp/outputs
 
 ENV WHISPER_MODEL_SIZE=small
 ENV WHISPER_DEVICE=cpu
 ENV WHISPER_COMPUTE_TYPE=int8
 ENV CORS_ORIGINS=*
-ENV UPLOAD_DIR=/data/uploads
-ENV OUTPUT_DIR=/data/outputs
+ENV UPLOAD_DIR=/tmp/uploads
+ENV OUTPUT_DIR=/tmp/outputs
 
 EXPOSE 8000
 
