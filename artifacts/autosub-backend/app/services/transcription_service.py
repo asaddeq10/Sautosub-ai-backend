@@ -22,8 +22,29 @@ def get_model() -> WhisperModel:
             device=WHISPER_DEVICE,
             compute_type=WHISPER_COMPUTE_TYPE,
         )
-        logger.info("Model loaded successfully")
+        logger.info("Faster-Whisper model '%s' loaded successfully", WHISPER_MODEL_SIZE)
     return _model
+
+
+def warmup_model() -> bool:
+    """
+    Load the Whisper model into memory.
+    Returns True on success, False on failure.
+    Intended to be called once at startup in a background thread.
+    """
+    logger.info(
+        "Model warm-up starting — model=%s device=%s compute=%s",
+        WHISPER_MODEL_SIZE, WHISPER_DEVICE, WHISPER_COMPUTE_TYPE,
+    )
+    try:
+        get_model()
+        logger.info("Model warm-up complete — ready to transcribe")
+        return True
+    except Exception:
+        logger.exception(
+            "Model warm-up failed — model will be loaded on first transcription request instead"
+        )
+        return False
 
 
 def transcribe(audio_path: str) -> tuple[list[Any], str]:
@@ -38,7 +59,11 @@ def transcribe(audio_path: str) -> tuple[list[Any], str]:
     )
 
     detected_language = info.language
-    logger.info("Detected language: %s (probability %.2f)", detected_language, info.language_probability)
+    logger.info(
+        "Detected language: %s (probability %.2f)",
+        detected_language,
+        info.language_probability,
+    )
 
     segments = list(segments_gen)
     logger.info("Transcription complete — %d segments", len(segments))
