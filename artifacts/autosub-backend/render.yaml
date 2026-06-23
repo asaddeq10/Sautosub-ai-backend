@@ -16,8 +16,12 @@ services:
         value: "*"
       - key: MAX_FILE_SIZE_MB
         value: "500"
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      - key: OUTPUT_DIR
+        value: /data/outputs
     disk:
       name: autosub-data
-      mountPath: /app
+      mountPath: /data
       sizeGB: 10
     healthCheckPath: /health

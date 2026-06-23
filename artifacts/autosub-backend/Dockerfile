@@ -11,12 +11,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN mkdir -p uploads outputs
+RUN mkdir -p /data/uploads /data/outputs uploads outputs
 
 ENV WHISPER_MODEL_SIZE=small
 ENV WHISPER_DEVICE=cpu
 ENV WHISPER_COMPUTE_TYPE=int8
 ENV CORS_ORIGINS=*
+ENV UPLOAD_DIR=/data/uploads
+ENV OUTPUT_DIR=/data/outputs
 
 EXPOSE 8000
 
