@@ -88,7 +88,7 @@ app.include_router(download.router)
 app.include_router(translate.router)
 
 
-@app.get("/", tags=["Health"], summary="Root health check")
+@app.api_route("/", methods=["GET", "HEAD"], tags=["Health"], summary="Root health check")
 async def root():
     return {
         "service": "AutoSub AI Backend",
