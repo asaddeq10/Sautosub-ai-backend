@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt .
+RUN pip install --no-cache-dir --prefer-binary onnxruntime
+RUN pip install --no-cache-dir --prefer-binary ctranslate2
+RUN pip install --no-cache-dir --prefer-binary faster-whisper
 RUN pip install --no-cache-dir --prefer-binary -r requirements.txt
 
 COPY . .
