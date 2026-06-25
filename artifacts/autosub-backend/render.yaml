@@ -7,7 +7,7 @@ services:
     region: oregon
     envVars:
       - key: WHISPER_MODEL_SIZE
-        value: small        # small model fits comfortably in 2 GB RAM (Standard plan)
+        value: tiny         # tiny model (~150 MB) — safe for both free and standard tier RAM
       - key: WHISPER_DEVICE
         value: cpu
       - key: WHISPER_COMPUTE_TYPE
