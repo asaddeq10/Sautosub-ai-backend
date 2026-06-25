@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import CORS_ORIGINS, WHISPER_MODEL_SIZE
-from app.routers import upload, subtitles, status, download
+from app.routers import upload, subtitles, status, download, translate
 from app.services.transcription_service import warmup_model
 
 logging.basicConfig(
@@ -85,6 +85,7 @@ app.include_router(upload.router)
 app.include_router(subtitles.router)
 app.include_router(status.router)
 app.include_router(download.router)
+app.include_router(translate.router)
 
 
 @app.get("/", tags=["Health"], summary="Root health check")
