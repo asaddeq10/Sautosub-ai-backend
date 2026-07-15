@@ -1,6 +1,9 @@
 from faster_whisper import WhisperModel
 
-print("Loading Whisper model...")
+print("===================================")
+print("      AutoSub AI")
+print(" Loading Faster Whisper Model...")
+print("===================================")
 
 model = WhisperModel(
     "small",
@@ -8,4 +11,5 @@ model = WhisperModel(
     compute_type="int8"
 )
 
-print("✅ Model loaded successfully!")
+print("\n✅ Model loaded successfully!")
+print("AutoSub AI is ready for transcription.")
